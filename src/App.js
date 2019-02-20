@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import Radium, {StyleRoot} from 'radium';
 import './App.css';
 import Person from './Person/Person'
+
 class App extends Component {
   state = {
     persons: [
@@ -43,7 +45,28 @@ class App extends Component {
 
   render() {
 
+    const style = {
+      backgroundColor : 'green',
+      color : 'white',
+      font : 'inherit',
+      border : '1px solid blue',
+      padding : '8px',
+      cursor : 'pointer',
+      ':hover' : {
+        backgroundColor : 'lightgreen',
+        color : 'black'
+      }
+    }
     let persons = null;
+    
+    const classes = [];
+
+    if(this.state.persons.length <= 2){
+      classes.push('red');
+    }
+    if(this.state.persons.length <= 1){
+      classes.push('bold');
+    } 
     if(this.state.canRender){
       persons = (
         <div>
@@ -53,16 +76,24 @@ class App extends Component {
             change={this.chngHandler.bind(this, person.id)}/>
           })}
         </div>
-      )
+      );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor : 'salmon',
+        color : 'black'
+      }
     }
     return (
-      <div className="App">
-        <h1>React</h1>
-        <button onClick={this.toggle}>Toggle Name</button>
-        {this.state.canRender === true ? persons : null}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>React</h1>
+          <p className={classes.join(' ')}>oh yes.. it works</p>
+          <button style={style} onClick={this.toggle}>Toggle Name</button>
+          {this.state.canRender === true ? persons : null}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
