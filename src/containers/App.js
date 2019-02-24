@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Radium, {StyleRoot} from 'radium';
-import './App.css';
+import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-
+import Aux from '../hoc/Aux'
+import WithClass from '../hoc/withClass'
 
 class App extends Component {
   state = {
@@ -29,12 +29,11 @@ class App extends Component {
   chngHandler = (event, personIndex) => {
     this.setState({
       persons: [
-        {name: 'suru', age: 20},
-        {name: 'nikunj', age: 99},
-        {name: event.target.value, age: 22}
+        {id: 1, name: 'suru', age: 20},
+        {id: 2, name: 'nikunj', age: 99},
+        {id: 3, name: event.target.value, age: 22}
       ]
     });
-    console.log(event);
   }
 
   deleteHandler = (personIndex) =>{
@@ -55,19 +54,17 @@ class App extends Component {
     if(this.state.canRender){
       persons = <Persons persons={this.state.persons}
                 delete={this.deleteHandler}
-                changed={this.chngHandler} />
-
+                changed={this.chngHandler} />;
     }
+    
     return (
-      <StyleRoot>
-        <div className="App">
+        <Aux>
           <Cockpit showPersons={this.state.canRender} persons={this.state.persons} toggle={this.toggle}
           chngColor={this.state.canRender} />
           {persons}
-        </div>
-      </StyleRoot>
+        </Aux>
     );
   }
 }
 
-export default Radium(App);
+export default WithClass(App, classes.App);
