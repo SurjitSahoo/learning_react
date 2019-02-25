@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-import Aux from '../hoc/Aux'
-import WithClass from '../hoc/withClass'
+import Aux from '../hoc/Auxiliary';
+import WithClass from '../hoc/withClass';
 
 class App extends Component {
   state = {
